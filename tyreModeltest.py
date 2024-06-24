@@ -1,6 +1,7 @@
 import tensorflow as tf
 import tensorflow_datasets as tfds
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
+import datacollection
 import numpy as np
 '''
 print("Hello World")
@@ -61,6 +62,8 @@ relative_compound = np.array([0, 1, 0])  # One-hot encoded categorical {soft, me
 race_track = np.array([1, 0, 0, 0])  # One-hot encoded categorical {Austin, Baku, ..., Yas Marina}
 fulfilled_second_compound = np.array([1])  # Categorical
 number_of_avail_compounds = np.array([1, 0])  # One-hot encoded categorical {2, 3}
+#mock inputs -> real inputs
+
 
 #concanate the inputs
 input_features = np.concatenate((race_progress, remaining_pit_stops, relative_compound, race_track, fulfilled_second_compound, number_of_avail_compounds), axis=None)
@@ -75,5 +78,5 @@ model = tf.keras.models.Sequential([tf.keras.layers.Dense(32, activation='relu',
 model.compile(optimizer=tf.keras.optimizers.Nadam(), loss=SparseCategoricalCrossentropy(from_logits = True), metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],)
 
 #training
-labels = np.ones_like(input_features)
+labels = np.array([2])  # Categorical
 model.fit(input_features, labels, epochs=6, validation_data=(input_features, labels))
